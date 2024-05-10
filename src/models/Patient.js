@@ -1,5 +1,5 @@
 const admin = require('../config/firebase');
-const IPatiets = require('../interfaces/IPatiets'); // Asumiendo que tienes una interfaz básica para las personas
+const IPatiets = require('../interfaces/IPatient'); // Asumiendo que tienes una interfaz básica para las personas
 const firestore = admin.firestore();
 
 class Patient extends IPatiets {

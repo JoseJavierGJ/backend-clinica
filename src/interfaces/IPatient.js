@@ -37,4 +37,4 @@ class IPatient {
   static async deletePatient(patientId) {}
 }
 
-module.exports = IPatient;
+module.exports = IPatient
