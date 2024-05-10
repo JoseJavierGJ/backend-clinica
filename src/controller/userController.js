@@ -20,7 +20,9 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ email: userDoc.email }, process.env.SECRET, { expiresIn: '1h' })
     res.status(200).json({ 
       message: 'success',
-      token 
+      token,
+      userEmail: userDoc.email, // Incluir el correo electrónico
+      userImage: userDoc.imageUrl 
     })
   } catch (error) {
     res.status(500).json ({
