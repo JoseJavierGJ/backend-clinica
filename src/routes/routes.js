@@ -16,9 +16,11 @@ router.delete('/users/:email', authenticateToken, deleteUser);
 router.put('/users/:email', authenticateToken, updateUser);
 
 // Rutas para pacientes
-router.post('/register-patient', registerPatient);
-router.get('/get-all-patients', getAllPatients);
-router.delete('/patients/:id', deletePatient);
-router.put('/patients/:id', updatePatient);
+// Rutas para pacientes
+router.post('/register-patient', authenticateToken, registerPatient);
+router.get('/get-all-patients', authenticateToken, getAllPatients);
+router.delete('/patients/:id', authenticateToken, deletePatient);
+router.put('/patients/:id', authenticateToken, updatePatient);
+
 
 module.exports = router;

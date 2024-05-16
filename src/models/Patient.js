@@ -1,8 +1,8 @@
 const admin = require('../config/firebase');
-const IPatiets = require('../interfaces/IPatient'); // Asumiendo que tienes una interfaz básica para las personas
+const IPatients = require('../interfaces/IPatient'); 
 const firestore = admin.firestore();
 
-class Patient extends IPatiets {
+class Patient extends IPatients {
   constructor(nombre, apaterno, amaterno, fechaNacimiento, telefono, historialMedico) {
     super();
     this.nombre = nombre;
@@ -13,10 +13,11 @@ class Patient extends IPatiets {
     this.historialMedico = historialMedico;
   }
 
-  static async createPatient(nombre, apaterno, amaterno, fechaNacimiento, telefono, historialMedico) {
+  static async createPatient(userEmail, nombre, apaterno, amaterno, fechaNacimiento, telefono, historialMedico) {
     try {
       const patientRef = firestore.collection('patients').doc();
       await patientRef.set({
+        userEmail, // Se añade el email del usuario
         nombre,
         apaterno,
         amaterno,
@@ -24,18 +25,21 @@ class Patient extends IPatiets {
         telefono,
         historialMedico
       });
-      return patientRef.id; // Retorna el ID del documento creado
+      return patientRef.id;
     } catch (error) {
       console.log('Error => ', error);
       throw new Error('Error creating patient');
     }
   }
+  
 
-  static async getAllPatients() {
+
+  static async getAllPatients(userEmail) {
     try {
-      const patients = await firestore.collection('patients').get();
+      const patientQuery = firestore.collection('patients').where('userEmail', '==', userEmail);
+      const querySnapshot = await patientQuery.get();
       const foundPatients = [];
-      patients.forEach(doc => {
+      querySnapshot.forEach(doc => {
         foundPatients.push({
           id: doc.id,
           ...doc.data()
@@ -46,6 +50,7 @@ class Patient extends IPatiets {
       throw error;
     }
   }
+  
 
   static async deletePatient(patientId) {
     try {
