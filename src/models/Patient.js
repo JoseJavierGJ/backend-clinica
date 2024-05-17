@@ -17,7 +17,7 @@ class Patient extends IPatients {
     try {
       const patientRef = firestore.collection('patients').doc();
       await patientRef.set({
-        userEmail, // Se añade el email del usuario
+        userEmail,
         nombre,
         apaterno,
         amaterno,

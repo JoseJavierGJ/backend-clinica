@@ -33,24 +33,39 @@ class User extends IUser {
       throw new Error ('Error creating user')
     }
   }
+
+
   async verifyPassword(password) {
     return await bcrypt.compare(password, this.password)
   }
-  static async findByEmail (email) {
+
+
+  static async findByEmail(email) {
     try {
-      const user = firestore.collection('users').doc(email)
-      const userDoc = await user.get()
+      const user = firestore.collection('users').doc(email);
+      const userDoc = await user.get();
       if (userDoc.exists) {
-        const userData = userDoc.data()
-        return new User(userData.email, userData.password)
+        const userData = userDoc.data();
+        // Asegúrate de incluir todos los campos necesarios al crear el objeto User
+        return new User(
+          userData.email, 
+          userData.password, 
+          userData.nombre, 
+          userData.apaterno, 
+          userData.amaterno, 
+          userData.especialidad, 
+          userData.telefono
+        );
       }
-      return null
+      return null;
     } catch (error) {
-      console.log('Error => ', error )
-      throw new Error ('Error finding user')
+      console.log('Error => ', error);
+      throw new Error('Error finding user');
     }
   }
+  
  
+
   static async getAllUsers () {
     try {
       const users = await firestore.collection('users').get()

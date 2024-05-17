@@ -3,7 +3,7 @@ const Patient = require('../models/Patient');
 const registerPatient = async (req, res) => {
   try {
     const { nombre, apaterno, amaterno, fechaNacimiento, telefono, historialMedico } = req.body;
-    const userEmail = req.user.email; // Asumiendo que el middleware de autenticación añade 'user' al objeto 'req'
+    const userEmail = req.user.email; 
     const newPatient = await Patient.createPatient(userEmail, nombre, apaterno, amaterno, fechaNacimiento, telefono, historialMedico);
     res.status(201).json({
       message: 'Patient registered successfully',
