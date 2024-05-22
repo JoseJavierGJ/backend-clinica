@@ -3,16 +3,18 @@ const IPatients = require('../interfaces/IPatient');
 const firestore = admin.firestore();
 
 class Patient extends IPatients {
-  constructor(nombre, email, telefono, direccion, fecha) {
+  constructor(nombre, email, telefono, direccion, fecha, edad, sexo) {
     super();
     this.nombre = nombre;
     this.email = email;
     this.telefono = telefono;
     this.direccion = direccion;
     this.fecha = fecha;
+    this.edad = edad;    
+    this.sexo = sexo;
   }
 
-  static async createPatient(userEmail, nombre, email, telefono, direccion, fecha) {
+  static async createPatient(userEmail, nombre, email, telefono, direccion, fecha, edad, sexo) {
     try {
       const patientRef = firestore.collection('patients').doc();
       await patientRef.set({
@@ -21,7 +23,9 @@ class Patient extends IPatients {
         email,
         telefono,
         direccion,
-        fecha
+        fecha,
+        edad,
+        sexo
       });
       return patientRef.id;
     } catch (error) {

@@ -2,9 +2,9 @@ const Patient = require('../models/Patient');
 
 const registerPatient = async (req, res) => {
   try {
-    const { nombre, email, telefono, direccion, fecha } = req.body;
+    const { nombre, email, telefono, direccion, fecha, edad, sexo } = req.body;
     const userEmail = req.user.email; 
-    const newPatient = await Patient.createPatient(userEmail, nombre, email, telefono, direccion, fecha);
+    const newPatient = await Patient.createPatient(userEmail, nombre, email, telefono, direccion, fecha, edad, sexo);
     res.status(201).json({
       message: 'Patient registered successfully',
       patientId: newPatient
