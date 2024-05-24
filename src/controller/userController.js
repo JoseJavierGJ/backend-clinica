@@ -11,12 +11,14 @@ const loginUser = async (req, res) => {
         message: 'User not found'
       })
     }
+    
     const isValidPass = await userDoc.verifyPassword(password)
     if(!isValidPass) {
       return res.status(401).json({
         message: 'Invalid Credentials'
       })
     }
+
     const token = jwt.sign({ email: userDoc.email, nombre: userDoc.nombre }, process.env.SECRET, { expiresIn: '1h' })
     res.status(200).json({ 
       message: 'success',
@@ -46,7 +48,6 @@ const registerUser = async (req, res) => {
       user: newUser
     }) 
   } catch (error) {
-    // Este catch maneja errores en el bloque try de la función registerUser
     res.status(500).json({
       message: 'Internal Server Error'
     })

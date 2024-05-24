@@ -46,7 +46,6 @@ class User extends IUser {
       const userDoc = await user.get();
       if (userDoc.exists) {
         const userData = userDoc.data();
-        // Asegúrate de incluir todos los campos necesarios al crear el objeto User
         return new User(
           userData.email, 
           userData.password, 

@@ -27,6 +27,14 @@ class Medicine {
     }
   }
 
+  static async deleteMedicine (medicine) {
+    try {
+      await firestore.collection('medicines').doc(medicine).delete()
+    } catch (error) {
+      throw error
+    }
+  }
+
   static async getAllMedicines () {
     try {
       const snapshot = await firestore.collection('medicines').get();

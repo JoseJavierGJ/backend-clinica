@@ -11,7 +11,20 @@ const createMedicine = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: 'Internal Server Error',
-      error: error.message  // Más información sobre el error
+      error: error.message
+    });
+  }
+}
+
+const deleteMedicine = async (req, res) => {
+  const { nombre } = req.params; 
+  try {
+    await Medicine.deleteMedicine(nombre);
+    res.status(204).send(); 
+  } catch (error) {
+    res.status(500).json({
+      message: 'Internal Server Error',
+      error: error.message 
     });
   }
 }
@@ -31,4 +44,4 @@ const getAllMedicines = async (req, res) => {
   }
 }
 
-module.exports = { createMedicine, getAllMedicines };
+module.exports = { createMedicine, deleteMedicine, getAllMedicines };
