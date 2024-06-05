@@ -3,21 +3,23 @@ const admin = require('../config/firebase');
 const firestore = admin.firestore();
 
 class Medicine {
-  constructor (nombre, descripcion, precio, duracion) {
+  constructor (nombre, descripcion, precio, duracion, mg) {
     this.nombre = nombre;
     this.descripcion = descripcion;
     this.precio = precio;
     this.duracion = duracion;
+    this.mg = mg;
   }
 
-  static async createMedicine (nombre, descripcion, precio, duracion) {
+  static async createMedicine (nombre, descripcion, precio, duracion, mg) {
     try {
       const medicineRef = firestore.collection('medicines').doc(nombre);
       const medicineData = {
         nombre,
         descripcion,
         precio,
-        duracion
+        duracion,
+        mg
       };
       await medicineRef.set(medicineData);
       return medicineData;  // Retornar los datos del medicamento creado
@@ -48,7 +50,23 @@ class Medicine {
       throw new Error('Error retrieving medicines');
     }
   }
+
+  static async updateMedicine(nombre, descripcion, precio, duracion, mg) {
+    try {
+      const medicineRef = firestore.collection('medicines').doc(nombre);
+      const medicineData = {
+        descripcion,
+        precio,
+        duracion,
+        mg
+      };
+      await medicineRef.update(medicineData);
+      return medicineData;  // Retornar los datos del medicamento actualizado
+    } catch (error) {
+      console.error('Error => ', error);
+      throw new Error('Error updating medicine');
+    }
+  }
 }
 
 module.exports = Medicine;
-

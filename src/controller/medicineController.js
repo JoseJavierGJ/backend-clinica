@@ -2,8 +2,8 @@ const Medicine = require('../models/Medicine');
 
 const createMedicine = async (req, res) => {
   try {
-    const { nombre, descripcion, precio, duracion } = req.body;
-    const newMedicine = await Medicine.createMedicine(nombre, descripcion, precio, duracion);
+    const { nombre, descripcion, precio, duracion, mg } = req.body;
+    const newMedicine = await Medicine.createMedicine(nombre, descripcion, precio, duracion, mg);
     res.status(201).json({
       message: 'Medicine created successfully',
       medicine: newMedicine
@@ -44,4 +44,21 @@ const getAllMedicines = async (req, res) => {
   }
 }
 
-module.exports = { createMedicine, deleteMedicine, getAllMedicines };
+const updateMedicine = async (req, res) => {
+  try {
+    const { nombre } = req.params;
+    const { descripcion, precio, duracion, mg } = req.body;
+    const updatedMedicine = await Medicine.updateMedicine(nombre, descripcion, precio, duracion, mg);
+    res.json({
+      message: 'Medicine updated successfully',
+      medicine: updatedMedicine
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Internal Server Error',
+      error: error.message
+    });
+  }
+}
+
+module.exports = { createMedicine, deleteMedicine, getAllMedicines, updateMedicine };

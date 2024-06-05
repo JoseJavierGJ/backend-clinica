@@ -4,7 +4,7 @@ const router = express.Router();
 // Importar controladores
 const { registerUser, loginUser, getAllUsers, deleteUser, updateUser } = require('../controller/userController');
 const { registerPatient, getAllPatients, deletePatient, updatePatient } = require('../controller/patientController');
-const { createMedicine, deleteMedicine, getAllMedicines } = require('../controller/medicineController');
+const { createMedicine, deleteMedicine, getAllMedicines, updateMedicine } = require('../controller/medicineController');
 
 // Middleware para autenticación
 const authenticateToken = require('../auth/authMiddleware');
@@ -26,5 +26,6 @@ router.put('/patients/:id', authenticateToken, updatePatient);
 router.post('/medicines', createMedicine);
 router.get('/all-medicines', getAllMedicines);
 router.delete('/medicines/:nombre', deleteMedicine);
+router.put('/medicines/:nombre', updateMedicine);
 
 module.exports = router;
