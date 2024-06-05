@@ -23,9 +23,9 @@ router.delete('/patients/:id', authenticateToken, deletePatient);
 router.put('/patients/:id', authenticateToken, updatePatient);
 
 // Rutas para medicamentos
-router.post('/medicines', createMedicine);
-router.get('/all-medicines', getAllMedicines);
-router.delete('/medicines/:nombre', deleteMedicine);
-router.put('/medicines/:nombre', updateMedicine);
+router.post('/medicines', authenticateToken, createMedicine);
+router.get('/all-medicines', authenticateToken, getAllMedicines);
+router.delete('/medicines/:nombre', authenticateToken, deleteMedicine);
+router.put('/medicines/:nombre', authenticateToken, updateMedicine);
 
 module.exports = router;
