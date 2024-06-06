@@ -11,7 +11,7 @@ const loginUser = async (req, res) => {
         message: 'User not found'
       })
     }
-    
+
     const isValidPass = await userDoc.verifyPassword(password)
     if(!isValidPass) {
       return res.status(401).json({
@@ -19,13 +19,14 @@ const loginUser = async (req, res) => {
       })
     }
 
-    const token = jwt.sign({ email: userDoc.email, nombre: userDoc.nombre, especialidad: userDoc.email }, process.env.SECRET, { expiresIn: '1h' })
+    const token = jwt.sign({ email: userDoc.email, nombre: userDoc.nombre, especialidad: userDoc.especialidad, apaterno: userDoc.apaterno }, process.env.SECRET, { expiresIn: '1h' }) 
     res.status(200).json({ 
       message: 'success',
       token,
       userEmail: userDoc.email,
       userNombre: userDoc.nombre,
-      userEspecialid: userDoc.especialidad
+      userApaterno: userDoc.apaterno,
+      userEspecialidad: userDoc.especialidad
     })
   } catch (error) {
     res.status(500).json ({
@@ -33,6 +34,8 @@ const loginUser = async (req, res) => {
     })
   }
 }
+
+
 
 const registerUser = async (req, res) => {
   try {
